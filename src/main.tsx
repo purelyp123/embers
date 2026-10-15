@@ -56,6 +56,7 @@ function ExtensionMultiplexer() {
                         <Box sx={{ height: "100vh" }}>
                             <Routes>
                                 <Route index element={<Main />} />
+                                <Route path="index.html" element={<Main />} />
                                 <Route
                                     path="spell-selection-popover"
                                     element={<SpellSelectionPopover />}
@@ -73,6 +74,7 @@ function ExtensionMultiplexer() {
         return (
             <Routes>
                 <Route index element={<Docs />} />
+                <Route path="index.html" element={<Docs />} />
                 <Route path="tutorials" element={<Tutorials />} />
                 <Route path="listings" element={<Listings />} />
             </Routes>

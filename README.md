@@ -49,6 +49,50 @@ These are some features that are on Embers' backlog:
 
 ## Development and spell catalog
 
+To build with Docker instead of installing Node dependencies on your host, start
+Docker Desktop (or another Docker engine with Buildx), then run from this repo:
+
+```sh
+docker buildx build --target artifact --output type=local,dest=dist .
+```
+
+The Dockerfile uses the official Node.js `22.23.3-bookworm-slim` image. It installs
+the locked npm dependencies with installation hooks disabled, runs `npm test`,
+downloads and verifies the complete animation library, and runs the TypeScript
+and Vite build. The resulting static site is exported directly into your local
+`dist/` folder using Docker's [local exporter](https://docs.docker.com/build/building/export/).
+No web server is started. Only the exported files are written to your checkout;
+dependencies and build caches stay in Docker.
+
+The first Docker build downloads its base image, npm packages, and about 1.12 GB
+of animation assets. Docker caches npm downloads and the animation library for
+later builds. These caches are separate from the files you already downloaded
+on your Mac; removing Docker's build cache means downloading them again.
+
+The build context excludes host `node_modules/`, `dist/`, `public/Library/`, Git
+history, and local environment files. Source files are copied into the build
+container; your checkout is not mounted into it. Docker needs network access for
+the initial dependency and asset downloads. The Dockerfile does not install
+global npm packages or additional system packages.
+
+To run just the tests in Docker, without downloading animations or building:
+
+```sh
+docker buildx build --target tests --progress=plain .
+```
+
+If you use a separate animation host, pass its public URL explicitly at build
+time instead of using a local `.env` file:
+
+```sh
+docker buildx build --target artifact --build-arg VITE_ASSET_LOCATION=https://your-asset-host.example/Library --output type=local,dest=dist .
+```
+
+The exported site still includes the animation library. Build arguments are
+public configuration, so do not pass secrets through them. Render's Static Site
+workflow below continues to use its own npm build; this Dockerfile is for local
+builds and does not change the hosting setup.
+
 Use Node.js 22.18+ and the checked-in npm lockfile:
 
 ```sh
