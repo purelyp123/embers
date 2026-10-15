@@ -13,8 +13,16 @@ import { getItemSize } from "../utils";
 import { log_error } from "../logging";
 import spellsJSON from "../assets/spells_record.json";
 import { constants } from "../constants";
+import definitions from "../assets/spell-catalog.json";
+import { createSpellCatalog } from "./spell-catalog";
+import effectsJSON from "../assets/effect_record.json";
+import type { Effects } from "../types/effects";
 
-export const spells = spellsJSON as Spells;
+export const spells = createSpellCatalog({
+    definitions,
+    presets: spellsJSON as Spells,
+    effects: effectsJSON as unknown as Effects,
+});
 export const spellIDs = Object.keys(spells);
 
 export interface Target {

@@ -47,3 +47,12 @@
 .label {
     font-weight: 700;
 }
+
+.spell-rules .spell-details-row {
+    align-items: flex-start;
+}
+
+.spell-rules .spell-details-row p {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}

@@ -33,7 +33,8 @@ These are some features that are on Embers' backlog:
 - [x] Support basic projectiles/AOE effects
 - [x] Support all spell effects from JB2A
 - [ ] Support all generic effects from JB2A
-- [ ] Implement all spells from D&D 5e's Player Handbook (60/361 - 16.6%)
+- [x] Include the 288 level 1–9 spells from Deck Designer (dedicated effects where available, school sigils otherwise)
+- [ ] Add dedicated spell animations for spells currently using school sigils
 - [x] Support permanent effects
 - [x] Support custom metadata
 - [x] Allow for custom spell parameters
@@ -45,6 +46,92 @@ These are some features that are on Embers' backlog:
 - [x] Allow some simple actions like moving tokens (for spells like Misty Step)
 - [ ] Allow basic shader effects like changing colors, screen shake, etc
 - [x] Allow effects to play when a spell ends manually
+
+## Development and spell catalog
+
+Use Node.js 22.18+ and the checked-in npm lockfile:
+
+```sh
+npm ci --ignore-scripts
+npm test
+npm run lint
+npm run build
+```
+
+The level 1–9 spell definitions in `src/assets/spell-catalog.json` are a snapshot of
+Deck Designer's `src/data/spells/spells-level-1.json` through `spells-level-9.json`.
+To refresh them from a local checkout:
+
+```sh
+npm run import:spells -- /path/to/dnd-deck-designer/src/data/spells
+```
+
+Embers merges these definitions with `src/assets/spells_record.json`. Existing
+spell and ability IDs, parameters, and animation blueprints stay compatible with
+saved spellbooks. Cantrips and additional abilities are retained. Magic Missile
+continues to use the original `magic_missiles` ID. The resulting catalog has 307
+entries: 288 leveled spells plus 19 existing cantrips, spells, and abilities.
+
+New spells use a transient JB2A rune for their school; their details identify this
+as a generic casting animation. Thunderwave uses its dedicated JB2A effect.
+These animations do not enforce game rules or create persistent spell areas.
+The full spell text, concentration, ritual, and upcasting details are shown in the
+Spell Details panel.
+
+Fetch the animations and thumbnails for the complete effect catalog before
+running or building the extension:
+
+```sh
+npm run assets:spells
+npm run dev
+```
+
+This downloads 2,254 files (about 1.12 GB) from the official
+[JB2A free library](https://github.com/Jules-Bens-Aa/JB2A_DnD5e) into the existing,
+git-ignored `public/Library` directory. The manifest pins an upstream revision and
+Git blob checksums; rerunning the command verifies sizes and checksums and skips
+valid copies. Downloads run four at a time and fail on missing or invalid files.
+The manifest covers every animation variant and thumbnail in
+`src/assets/effect_record.json`, including generic effects used by custom spells,
+plus the new school sigils. No Foundry installation, FFmpeg, or Python packages
+are required to download the media.
+
+Ten legacy paths use unchanged free files copied under Embers' expected filenames:
+
+- Arms of Hadar's transparent animation and Entangle's transparent complete/loop
+  animations use the normal-opacity originals; the custom 75% opacity versions
+  are unavailable in the pinned free library.
+- Detect Magic's cone thumbnail uses the free 5-foot cone thumbnail.
+- The green Overcharged Sphere animation variants and thumbnail use the free
+  dark-purple version; the custom green recolor is unavailable.
+
+Effect IDs and saved blueprints remain compatible. Each substitution has a
+`sourcePath` and explanation in the manifest. Other available opacity variants
+are downloaded as-is.
+
+For Render, use a Static Site with publish directory `dist`, environment variables
+`NODE_VERSION=22.23.3` and `SKIP_INSTALL_DEPS=true`, and this build command:
+
+```sh
+npm ci --ignore-scripts && npm run assets:spells && npm run build
+```
+
+Render fetches the library on its build machine; locally downloaded files are
+git-ignored and won't arrive through a Git push. The downloader does not run
+automatically as part of `npm run build`. Vite copies `public/Library` into
+`dist/Library`. Leave `VITE_ASSET_LOCATION` unset to serve these files alongside
+the extension. Deployments using a separate `VITE_ASSET_LOCATION` must provide
+the same library paths at that asset host.
+
+Configure a Render rewrite from `/*` to `/index.html` for browser routes; Render
+serves existing static files before applying the rewrite. Animation traffic
+counts toward the hosting provider's bandwidth allowance.
+
+Animations and thumbnails are by **Jules & Ben's Animated Assets (JB2A)** and are
+used unchanged under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+The exact upstream revision, source URLs, and checksums are recorded in
+`src/assets/spell-animation-assets.json`. `public/jb2a-attribution.txt` is included
+in the published site. No Patreon assets are included.
 
 ### More Information
 For more information, visit the [Embers website](https://embers.armindo.eu).

@@ -299,6 +299,40 @@ export default function SpellDetails() {
                             className="spell-details-divider"
                             style={{ marginBottom: "0.5rem" }}
                         />
+                        {selectedSpell.details && (
+                            <div className="spell-rules">
+                                <DetailRow label="Level" value={selectedSpell.details.level.toString()} />
+                                <DetailRow label="School" value={selectedSpell.details.school} />
+                                <DetailRow label="Casting time" value={selectedSpell.details.castingTime} />
+                                <DetailRow label="Range" value={selectedSpell.details.range} />
+                                <DetailRow label="Components" value={selectedSpell.details.components} />
+                                <DetailRow label="Duration" value={selectedSpell.details.duration} />
+                                <DetailRow label="Concentration" value={selectedSpell.details.concentration ? "Yes" : "No"} />
+                                <DetailRow label="Ritual" value={selectedSpell.details.ritual ? "Yes" : "No"} />
+                                {selectedSpell.details.save && (
+                                    <DetailRow label="Saving throw" value={selectedSpell.details.save} />
+                                )}
+                                {selectedSpell.details.attack && (
+                                    <DetailRow label="Spell attack" value={selectedSpell.details.attack} />
+                                )}
+                                {selectedSpell.details.damage && (
+                                    <DetailRow label="Damage" value={`${selectedSpell.details.damage.dice} ${selectedSpell.details.damage.type.join(", ")}`} />
+                                )}
+                                <Typography variant="body2" sx={{ m: 1, whiteSpace: "pre-wrap" }}>
+                                    {selectedSpell.details.description}
+                                </Typography>
+                                {selectedSpell.details.atHigherLevels && (
+                                    <Typography variant="body2" sx={{ m: 1, whiteSpace: "pre-wrap" }}>
+                                        <strong>At higher levels: </strong>{selectedSpell.details.atHigherLevels}
+                                    </Typography>
+                                )}
+                            </div>
+                        )}
+                        {selectedSpell.animationNote && (
+                            <Typography variant="body2" sx={{ m: 1 }}>
+                                {selectedSpell.animationNote}
+                            </Typography>
+                        )}
                         {selectedSpell.minTargets != undefined && (
                             <DetailRow
                                 label="Minimum number of targets"

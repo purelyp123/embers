@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">Embers-P — flaming P</title>
+  <defs>
+    <linearGradient id="flames" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#e62e0b"/>
+      <stop offset="0.55" stop-color="#ff7900"/>
+      <stop offset="1" stop-color="#ffd45a"/>
+    </linearGradient>
+    <linearGradient id="letter" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fff7bd"/>
+      <stop offset="0.45" stop-color="#ffd34f"/>
+      <stop offset="1" stop-color="#ff720b"/>
+    </linearGradient>
+  </defs>
+  <path d="M25 69C11 56 14 38 21 24C22 35 29 40 34 43C28 24 48 20 48 5C64 16 58 29 69 35C70 24 80 20 80 9C96 21 98 32 94 43C102 40 108 32 109 24C122 43 119 61 107 73Z" fill="url(#flames)" stroke="#681d0b" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M36 57C31 45 42 36 43 28C47 39 43 44 51 49C55 43 57 40 56 33C67 41 70 49 67 58Z" fill="#fff0a0"/>
+  <path d="M25 121V43H73C98 43 113 53 113 70C113 88 98 98 73 98H53V121Z" fill="url(#letter)" stroke="#681d0b" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M53 62H73C82 62 87 65 87 70C87 76 82 79 73 79H53Z" fill="#30130c"/>
+  <path d="M33 114V51H72" fill="none" stroke="#fff6c4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+</svg>

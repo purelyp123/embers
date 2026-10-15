@@ -28,6 +28,8 @@ export interface Parameter {
 }
 
 export interface Spell {
+    details?: SpellDefinition;
+    animationNote?: string;
     // The name of the effect to play
     name?: string;
     // Minimum number of targets
@@ -55,3 +57,21 @@ export interface Spell {
 export interface Spells {
     [key: string]: Spell;
 }
+
+export type SpellDefinition = {
+    id: string;
+    name: string;
+    level: number;
+    school: string;
+    castingTime: string;
+    range: string;
+    components: string;
+    duration: string;
+    concentration: boolean;
+    ritual: boolean;
+    description: string;
+    atHigherLevels?: string;
+    damage?: { dice: string; type: string[] };
+    save?: string;
+    attack?: string;
+};

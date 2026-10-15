@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --experimental-strip-types --test src/effects/spell-catalog.test.ts scripts/animation-assets.test.mjs",
+    "import:spells": "node scripts/import-spells.mjs",
+    "assets:spells": "node scripts/fetch-spell-assets.mjs"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

@@ -1,0 +1,16 @@
+Animated assets and thumbnails by Jules & Ben's Animated Assets (JB2A).
+Website: https://www.jb2a.com/
+Source: https://github.com/Jules-Bens-Aa/JB2A_DnD5e
+Revision: e930132102cbfa22a0ba964a3df73feb3412727a
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Media files are downloaded unchanged from the official free library.
+Some files are copied under legacy Embers filenames for compatibility:
+- Arms of Hadar and two Entangle transparency variants use normal-opacity
+  originals because their custom 75% opacity files are unavailable.
+- The Detect Magic cone thumbnail uses the free 5-foot cone thumbnail.
+- The green Overcharged Sphere effect uses the free dark-purple animation
+  and thumbnail because the custom green recolor is unavailable.
+
+The asset manifest in Embers records each compatibility source and checksum.
